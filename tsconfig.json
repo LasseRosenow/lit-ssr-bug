@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2020",
+    "lib": [
+      "es2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "nodenext",
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    /* Remove in the future */
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

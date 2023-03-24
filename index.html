@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Lit SSR Test Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/index.css">
+    <!--ssr-header-->
+</head>
+
+<style>
+    body[ssr] {
+        display: none;
+    }
+</style>
+
+<body ssr>
+    <script>
+        if (HTMLTemplateElement.prototype.hasOwnProperty("shadowRoot")) {
+            // This browser has native declarative shadow DOM support, so we can
+            // allow painting immediately.
+            document.body.removeAttribute("ssr");
+        }
+    </script>
+
+    <app-router></app-router>
+
+    <script type="module">
+        (async () => {
+            // Start fetching the Lit hydration support module (note the absence
+            // of "await" -- we don't want to block yet).
+            const litHydrateSupportInstalled = import(
+                "lit/experimental-hydrate-support.js"
+            );
+
+            if (!HTMLTemplateElement.prototype.hasOwnProperty("shadowRoot")) {
+                // Fetch the declarative shadow DOM polyfill.
+                const { hydrateShadowRoots } = await import(
+                    "@webcomponents/template-shadowroot/template-shadowroot.js"
+                );
+
+                // Apply the polyfill. This is a one-shot operation, so it is important
+                // it happens after all HTML has been parsed.
+                hydrateShadowRoots(document.body);
+
+                // At this point, browsers without native declarative shadow DOM
+                // support can paint the initial state of your components!
+                document.body.removeAttribute("ssr");
+            }
+            await litHydrateSupportInstalled;
+
+            // import('./src/app-router.ts');
+        })();
+    </script>
+</body>
+
+</html>
